@@ -12,6 +12,7 @@
 package com.livehereandnow.ages.engine;
 
 import com.livehereandnow.ages.components.Card;
+import com.livehereandnow.ages.components.CardRow;
 import com.livehereandnow.ages.components.CardType;
 import com.livehereandnow.ages.components.Cards;
 import com.livehereandnow.ages.components.Player;
@@ -31,9 +32,13 @@ public class EngineCore {
 //   變量一律小寫開頭,第二個英文字要大寫開頭,例如cardRow
 //    常量一律全大寫,例如NOCARD,並加上修飾詞final
 
+//    int[] CARD_POINT = {1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3};
+//    private List<Card> ageA內政牌;
+//    private List<Card> old___cardRow;
     int[] CARD_POINT = {1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3};
-    private List<Card> ageA內政牌;
-    private List<Card> cardRow;
+
+    private CardRow cardRow;
+
 //  待優化  
 //    private List<Card> 玩家1手牌;
 //    private List<Card> 玩家1桌牌;
@@ -45,7 +50,6 @@ public class EngineCore {
 //
 //    private List<Card> player3CardsOnTable;
 //    private List<Card> player4CardsOnTable;
-
 //  待優化
     private Player[] 玩家 = new Player[4];
     private Player 當前玩家;
@@ -87,13 +91,12 @@ public class EngineCore {
 //    public int get當前玩家ID() {
 //        return 當前玩家ID;
 //    }
-    public List<Card> getAgeA內政牌() {
-        return ageA內政牌;
-    }
-
+//    public List<Card> getAgeA內政牌() {
+//        return ageA內政牌;
+//    }
     public boolean doStatus() {
 
-        showCardRow();
+        cardRow.show();
         System.out.println();
         System.out.println("   === Round #" + roundNum + " ===");
         System.out.print("   --- Player A is " + 玩家[0].getName() + " ---");
@@ -103,25 +106,6 @@ public class EngineCore {
         System.out.println();
         System.out.println();
         return true;
-    }
-
-    public void showCardRow() {
-        System.out.println("   === Card Row ===");
-        System.out.print("   Value 1: ");
-        for (int k = 0; k < 5; k++) {
-            System.out.print(k + cardRow.get(k).toString(3));
-        }
-        System.out.println();
-        System.out.print("   Value 2: ");
-        for (int k = 5; k < 9; k++) {
-            System.out.print(k + cardRow.get(k).toString(2));
-        }
-        System.out.println();
-        System.out.print("   Value 3: ");
-        for (int k = 9; k < 13; k++) {
-            System.out.print(k + cardRow.get(k).toString(2));
-        }
-        System.out.println();
     }
 
 //    public String getPlayerCardsString(List<Card> list) {
@@ -194,21 +178,21 @@ public class EngineCore {
         玩家[2].getCivilCounter().setPoint(3);
         玩家[3].getCivilCounter().setPoint(4);
 
-        Cards cards = new Cards();
+//        Cards cards = new Cards();
 //        ageA內政牌 = cards.get時代A內政牌();
 //        ageA內政牌 = cards.get某時代內政牌(1);//DEBUG 暫用時代1
+//        ageA內政牌 = cards.get測試牌(4);//DEBUG 暫用時代1
+//        old___cardRow = new ArrayList<>();
+//
+//        Collections.shuffle(ageA內政牌);
+//
+//        // only take first 13 cards and discard others
+//        for (int k = 0; k < 13; k++) {
+//            old___cardRow.add(ageA內政牌.get(k));
+////            old___cardRow.add(cards.get某時代內政牌(1));
+//        }
+        cardRow = new CardRow();
 
-        ageA內政牌 = cards.get測試牌(4);//DEBUG 暫用時代1
-
-        cardRow = new ArrayList<>();
-
-        Collections.shuffle(ageA內政牌);
-
-        // only take first 13 cards and discard others
-        for (int k = 0; k < 13; k++) {
-            cardRow.add(ageA內政牌.get(k));
-//            cardRow.add(cards.get某時代內政牌(1));
-        }
         System.out.println("   ========================");
         System.out.println("   *    Welcome to XXX    *");
         System.out.println("   ========================");
@@ -216,10 +200,9 @@ public class EngineCore {
         this.doStatus();
     }
 
-    public List<Card> getCardRow() {
-        return cardRow;
-    }
-
+//    public List<Card> getCards() {
+//        return old___cardRow;
+//    }
     public boolean doSetCulture(int k) {
         玩家[當前玩家ID - 1].get點數().set文化(k);
         return true;
@@ -262,24 +245,27 @@ public class EngineCore {
             System.out.println("拿的牌號必須要在0~12之內 *** 什麼事情都沒發生 ***");
             return true;
         }
-        if (cardRow.get(cardNum).get編號() == 999) {
+        if (cardRow.getCards().get(cardNum).get編號() == 999) {
 //                        System.out.println("不讓玩家拿空牌 *** Nothing happened ***");
             System.out.println("不讓玩家拿空牌 *** 什麼事情都沒發生 ***");
 
             return true;
         }
 
-        Card card = cardRow.get(k);
+//        Card card = old___cardRow.get(k);
         int cardPoint = CARD_POINT[k];
-
+        Card card = cardRow.getCards().get(k);
 //        if (card.get卡名().length() == 0) {
 //            System.out.println("This card has been taken! ***Nothing happened***");
 //            return true;
 //        }
         if (get當前玩家().doTakeCard(cardPoint, card)) {//如果當當前玩家成功拿了牌
             // when card is taken successfully
-            cardRow.remove(k);//從卡牌列上移除該牌
-            cardRow.add(k, NOCARD);//並在卡牌列同一個位置增加空牌
+//            old___cardRow.remove(k);//從卡牌列上移除該牌
+//            old___cardRow.add(k, NOCARD);//並在卡牌列同一個位置增加空牌
+            cardRow.getCards().remove(k);//從卡牌列上移除該牌
+            cardRow.getCards().add(k, NOCARD);//並在卡牌列同一個位置增加空牌
+
         } else {
 //            System.out.println("拿牌沒有成功" + card.get卡名());
             System.out.println("   拿牌沒有成功的原因:" + get當前玩家().get失敗原因());
@@ -312,5 +298,4 @@ public class EngineCore {
 //        System.out.println("    done, 在指令行能用什麼樣的指令，把數字放到剛剛建好的內部類Score,設定文明指數set-culture 3");//
 //        return true;
 //    }
-
 }
