@@ -5,6 +5,7 @@
  */
 package com.livehereandnow.ages.engine;
 
+import com.livehereandnow.ages.components.Player;
 import com.livehereandnow.ages.exception.AgesException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,15 +23,64 @@ public class Engine {
         core = new EngineCore();
     }
 
-    public EngineCore getCore() {
-        return core;
+//    public EngineCore getCore() {
+//        return core;
+//    }
+    public Player getCurrentPlayer() {
+        return core.get當前玩家();
     }
-    
+
+    public boolean doCmd(String keyword) throws IOException, AgesException {
+        switch (keyword) {
+            case "construct-wonder":
+            case "wonder":
+                return core.doConstructWonder();
+
+            case "help":
+                return core.doHelp();
+
+            case "status":
+                return core.doStatus();
+
+            case "version":
+                return doVersion();
+
+            case "change-turn":
+                return core.doChangeTurn();
+
+            default:
+                System.out.println("Unknown keyword, " + keyword);
+                return false;
+        }
+    }
+
+    public boolean doCmd(String keyword, int parameter) throws IOException, AgesException {
+        switch (keyword) {
+            case "打":
+            case "out":
+            case "play":
+            case "play-card":
+            case "out-card":
+                return core.doPlayCard(parameter);
+
+            case "拿"://在我的環境NetBeans無法執行，但是在DOS可以
+            case "拿牌":
+            case "take":
+            case "take-card":
+                return core.doTakeCard(parameter);
+
+            default:
+                System.out.println("Unknown keyword, " + keyword);
+                return false;
+        }
+    }
 
     public boolean doVersion() {
 
         System.out.println();
-
+        System.out.println("  === ver 0.31 ===  2014-4-24, 19:08, by Mark　");
+        System.out.println("    1. *** rearrange doCmd ***");
+        System.out.println();
         System.out.println("  === ver 0.30 ===  2014-4-24, 18:30, by Mark　");
         System.out.println("    1. split Engine to Engine and EngineCore");
         System.out.println("    2. TODO add militaryCounter");
@@ -196,117 +246,4 @@ public class Engine {
         System.out.println("    4. Z最小版本,任何使用者介面的調整或增刪說明,與功能無關");
         return true;
     }
-
-    /**
-     * design command as type 1, single word, version help status type 2,
-     * keyword + parameter, take-card 1 take 1 play-card 1 play 1
-     *
-     * @param cmd
-     * @return
-     * @throws IOException
-     */
-    public boolean doCmd(String cmd) throws IOException, AgesException {
-        int tokenCnt = 0;//命令行裡共有幾個字，給予初值為0
-        String keyword = "";//指令是什麼，給予初值空字符串
-        int parameter = -1;//指令的參數是什麼，給予初值為-1，-1通常是指不能用的值
-
-        //將命令行的句子拆解為字，以空格格開為依據，空格都不記
-        String[] strTokens = cmd.split(" ");
-        List<String> tokens = new ArrayList<>();
-        for (String item : strTokens) {
-            if (item.length() > 0) {
-                tokens.add(item);
-            }
-        }
-
-        //超過兩個字的時候
-        if (tokens.size() > 2) {
-            System.out.println("Command must be one or two words only!");
-            return false;
-        }
-
-        //是兩個字的時候
-        if (tokens.size() == 2) {
-            try {
-                parameter = Integer.parseInt(tokens.get(1));
-            } catch (Exception ex) {
-                System.out.println("Parameter must be 0 or positive integer");
-                return false;
-            }
-        }
-
-        keyword = tokens.get(0);//指令的關鍵字是第0個字，例如take 3的take
-        tokenCnt = tokens.size();//賦予變量tokenCnt真正的值，真正的值是指到底打個幾個字
-
-        // === for one word command ===單指令的命令行
-        if (tokenCnt == 1) {//如果輸入的是一個字的話
-            switch (keyword) {
-                case "construct-wonder":
-                case "wonder": {
-
-                    return core.doConstructWonder();
-                }
-
-                case "help":
-                    return core.doHelp();
-
-                case "status":
-                    return core.doStatus();
-
-                case "version":
-                    return doVersion();
-
-                case "change-turn":
-                    return core.doChangeTurn();
-
-                //     default:
-            }
-            System.out.println("Unknown keyword, " + keyword);
-            return false;
-        }
-
-        // === for two words command ===如果你輸入是兩個字元
-        switch (keyword) {
-
-            case "打":
-            case "out":
-            case "play":
-            case "play-card":
-            case "out-card": {
-
-                return core.doPlayCard(parameter);
-            }
-            case "拿"://在我的環境NetBeans無法執行，但是在DOS可以
-            case "拿牌":
-            case "take":
-            case "take-card": {
-
-                return core.doTakeCard(parameter);
-            }
-
-//在命令行設定文化指數
-            case "set-cluture": {
-
-                if (tokens.get(0).equalsIgnoreCase("set-culture") || tokens.get(0).equalsIgnoreCase("culture")) {//簡易指令take
-                    if (tokens.size() != 2) { // set-culture X,X應該是正整數
-                        return false;
-                    }
-                    int cardNum = Integer.parseInt(tokens.get(1));//將第二個字符串轉為整數,第二個的序號為1
-                    if (cardNum > 998 || cardNum < 0) { // card number must be 0 to 12 only 
-//                        System.out.println("card number must be 0 to 12 only *** Nothing happened ***");
-                        System.out.println("設定的文化指數應該在0~998 *** 什麼事情都沒發生 ***");
-                        return true;
-                    }
-                    return core.doSetCulture(cardNum);
-                }
-
-                return false;
-            }
-            default:
-                System.out.println("Unknown keyword, " + keyword);
-                return false;
-
-        }
-    }
-
 }
