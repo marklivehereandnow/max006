@@ -79,6 +79,10 @@ public class Engine {
 
         System.out.println();
         System.out.println("  === ver 0.32 ===  2014-4-24, 19:44, by Mark　");
+        System.out.println("    1. done, starting round#2, add cards to Card Row");
+        System.out.println("    2. TODO how to end game when no more cards");
+        System.out.println();
+        System.out.println("  === ver 0.32 ===  2014-4-24, 19:44, by Mark　");
         System.out.println("    1. *** introduce CardRow.java ***");
         System.out.println("    2. TODO addNewCivilCard");
         System.out.println();

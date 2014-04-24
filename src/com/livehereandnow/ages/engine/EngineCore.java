@@ -144,6 +144,14 @@ public class EngineCore {
             當前玩家ID++;
         }
         this.set當前玩家(玩家[當前玩家ID]);
+
+        // addCard
+        if (roundNum >= 2) {
+            System.out.println(" ... auto add cards");
+            cardRow.setRound(roundNum);
+            cardRow.addCards();
+
+        }
         return true;
         //System.out.println("Change turn to player " + this.get當前玩家());
 
@@ -191,7 +199,7 @@ public class EngineCore {
 //            old___cardRow.add(ageA內政牌.get(k));
 ////            old___cardRow.add(cards.get某時代內政牌(1));
 //        }
-        cardRow = new CardRow();
+        cardRow = new CardRow(玩家人數);
 
         System.out.println("   ========================");
         System.out.println("   *    Welcome to XXX    *");
