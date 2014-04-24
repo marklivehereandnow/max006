@@ -109,7 +109,7 @@ public class Engine {
         System.out.println("   === Card Row ===");
         System.out.print("   Value 1: ");
         for (int k = 0; k < 5; k++) {
-            System.out.print(k + cardRow.get(k).toString(2));
+            System.out.print(k + cardRow.get(k).toString(3));
         }
         System.out.println();
         System.out.print("   Value 2: ");
@@ -196,10 +196,10 @@ public class Engine {
 
         Cards cards = new Cards();
 //        ageA內政牌 = cards.get時代A內政牌();
-        ageA內政牌 = cards.get某時代內政牌(1);//DEBUG 暫用時代1
-        
-//        ageA內政牌 = cards.get測試牌(1);//DEBUG 暫用時代1
-        
+//        ageA內政牌 = cards.get某時代內政牌(1);//DEBUG 暫用時代1
+
+        ageA內政牌 = cards.get測試牌(4);//DEBUG 暫用時代1
+
         cardRow = new ArrayList<>();
 
         Collections.shuffle(ageA內政牌);
@@ -224,13 +224,23 @@ public class Engine {
         玩家[當前玩家ID - 1].get點數().set文化(k);
         return true;
     }
-public boolean doPlayCard(int k) throws AgesException {
+
+    public boolean doConstructWonder() throws AgesException {
 //            Card card = ;
 //        int cardPoint = 1;//DEBUG，假設需要一個內政點數來打牌
-    get當前玩家().doPlayCard(k);
-    
-    return true;
-}
+        get當前玩家().doConstructWonder();
+
+        return true;
+    }
+
+    public boolean doPlayCard(int k) throws AgesException {
+//            Card card = ;
+//        int cardPoint = 1;//DEBUG，假設需要一個內政點數來打牌
+        get當前玩家().doPlayCard(k);
+
+        return true;
+    }
+
     /**
      * 1. take card
      *
@@ -245,7 +255,7 @@ public boolean doPlayCard(int k) throws AgesException {
      * @param k
      * @return true: perform take-card successfully
      */
-        public boolean doTakeCard(int k) throws AgesException {
+    public boolean doTakeCard(int k) throws AgesException {
         int cardNum = k;
         if (cardNum > 12 || cardNum < 0) { // card number must be 0 to 12 only 
 //                        System.out.println("card number must be 0 to 12 only *** Nothing happened ***");
@@ -307,12 +317,19 @@ public boolean doPlayCard(int k) throws AgesException {
 
         System.out.println();
 
+        System.out.println("  === ver 0.29 ===  2014-4-24, 13:42, by Mark　");
+        System.out.println("    1. new WonderStage with constructing status in toString()");
+        System.out.println("    2. add command 'construct-wonder','wonder' ");
+        System.out.println("    3. done, 建造成本原本是用字符串的方式(只有人看得懂)，現在準備拆解為各階段數值內容(程式能判讀)");
+        System.out.println("    4. TODO add militaryCounter");
+        System.out.println();
+
         System.out.println("  === ver 0.28 ===  2014-4-24, 12:22, by Max　");
         System.out.println("    1. 設定多樣是toString");
         System.out.println("    2. 重設拿取領袖牌邏輯，設定奇蹟牌邏輯");
         System.out.println("    3. TODO 建造成本原本是用字符串的方式(只有人看得懂)，現在準備拆解為各階段數值內容(程式能判讀)");
         System.out.println("    4. TODO add militaryCounter");
-        
+
         System.out.println("  === ver 0.27 ===  2014-4-24, 8:33, by Mark　");
         System.out.println("    1. introduce AgesException and new Counter class");
         System.out.println("    2. done, not allow to take card when 內政點數不夠");
@@ -505,6 +522,12 @@ public boolean doPlayCard(int k) throws AgesException {
         // === for one word command ===單指令的命令行
         if (tokenCnt == 1) {//如果輸入的是一個字的話
             switch (keyword) {
+                case "construct-wonder":
+                case "wonder": {
+
+                    return doConstructWonder();
+                }
+
                 case "help":
                     return doHelp();
 
@@ -528,6 +551,7 @@ public boolean doPlayCard(int k) throws AgesException {
 
         // === for two words command ===如果你輸入是兩個字元
         switch (keyword) {
+
             case "打":
             case "out":
             case "play":

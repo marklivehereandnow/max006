@@ -66,7 +66,7 @@ public class Cards implements CardType {
                     }
                 }
                 break;
-                case 4://所有時代的奇蹟
+            case 4://所有時代的奇蹟
                 for (int k = 0; k < cards.size(); k++) {
                     if ((cards.get(k).類型 == 奇蹟)) {
                         內政牌.add(cards.get(k));
@@ -89,7 +89,7 @@ public class Cards implements CardType {
         cards.add(new Card(4, "摩西", 0, 內政, 領袖, 綠色, "領袖", "擴充人口，食物需求-1", "0"));
         cards.add(new Card(5, "漢摩拉比", 0, 內政, 領袖, 綠色, "領袖", "內政點數+1，軍事點數-1", "0"));
         cards.add(new Card(6, "亞歷山大圖書館", 0, 內政, 奇蹟, 紫色, "奇蹟", "科技生產+1，文化生產+1，內政手牌上限+1，軍事手牌上限+1", "1,2,2,1"));
-        
+
         cards.add(new Card(7, "巨人像", 0, 內政, 奇蹟, 紫色, "奇蹟", "軍力+1，文化生產+1，殖民點數+1", "3,3"));
         cards.add(new Card(8, "空中花園", 0, 內政, 奇蹟, 紫色, "奇蹟", "笑臉+2，文化生產+1", "2,2,2"));
         cards.add(new Card(9, "金字塔", 0, 內政, 奇蹟, 紫色, "奇蹟", "內政點數+1", "3,2,1"));

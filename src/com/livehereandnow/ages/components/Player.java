@@ -43,6 +43,17 @@ public class Player {
         this.name = name;
     }
 
+    public boolean doConstructWonder() throws AgesException {
+        if (get奇蹟待建區().size()==0){
+            return false;
+        }
+        
+        get奇蹟待建區().get(0).getWonderStage().addStageDoneCnt();
+        
+        return true;
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public class Score {
 
         public int get文化生產() {

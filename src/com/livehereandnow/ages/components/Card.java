@@ -21,7 +21,8 @@ public class Card implements CardType {
         this.卡名 = 卡名;
         this.時代 = 時代;
         this.類型 = 類型;
-        this.建造成本 = 建造成本;
+//        this.建造成本 = 建造成本;
+        wonderStage=new WonderStage(建造成本);
     }
 
     public String get右上() {
@@ -64,14 +65,13 @@ public class Card implements CardType {
         this.牌背 = 牌背;
     }
 
-    public String get建造成本() {
-        return 建造成本;
-    }
-
-    public void set建造成本(String 建造成本) {
-        this.建造成本 = 建造成本;
-    }
-
+//    public String get建造成本() {
+//        return 建造成本;
+//    }
+//
+//    public void set建造成本(String 建造成本) {
+//        this.建造成本 = 建造成本;
+//    }
     String 右上;
     int 編號;
     int 加權值;
@@ -81,25 +81,29 @@ public class Card implements CardType {
     int 牌背;
     int 時代;
     String 卡名;
-    String 建造成本;
-    int[] 奇蹟建造成本=new int[5];//最多5個階段由階段0開始
-    int 奇蹟建造階段;//初值為0表示正在建造0階段 
-   int 類型;//0=領袖,1=奇蹟.2=黃牌
+//    String 建造成本;
+//    int[] 奇蹟建造成本=new int[5];//最多5個階段由階段0開始
+//    int 奇蹟建造階段;//初值為0表示正在建造0階段 
+    int 類型;//0=領袖,1=奇蹟.2=黃牌
+    WonderStage wonderStage;
+//    public int get奇蹟建造成本(int k) {
+//        return 奇蹟建造成本[k];
+//    }
+//
+//    public void set奇蹟建造成本(int k,int 奇蹟建造成本) {
+//        this.奇蹟建造成本[k] = 奇蹟建造成本;
+//    }
+//
+//    public int get奇蹟建造階段() {
+//        return 奇蹟建造階段;
+//    }
+//
+//    public void set奇蹟建造階段(int 奇蹟建造階段) {
+//        this.奇蹟建造階段 = 奇蹟建造階段;
+//    }
 
-    public int get奇蹟建造成本(int k) {
-        return 奇蹟建造成本[k];
-    }
-
-    public void set奇蹟建造成本(int k,int 奇蹟建造成本) {
-        this.奇蹟建造成本[k] = 奇蹟建造成本;
-    }
-
-    public int get奇蹟建造階段() {
-        return 奇蹟建造階段;
-    }
-
-    public void set奇蹟建造階段(int 奇蹟建造階段) {
-        this.奇蹟建造階段 = 奇蹟建造階段;
+    public WonderStage getWonderStage() {
+        return wonderStage;
     }
 
     public int get加權值() {
@@ -117,13 +121,13 @@ public class Card implements CardType {
         this.類型 = 類型;
     }
 
-    public Card(int 編號, String 卡名, int 時代, int 類型, int 加權值) {
-        this.編號 = 編號;
-        this.卡名 = 卡名;
-        this.時代 = 時代;
-        this.類型 = 類型;
-        this.加權值 = 加權值;
-    }
+//    public Card(int 編號, String 卡名, int 時代, int 類型, int 加權值) {
+//        this.編號 = 編號;
+//        this.卡名 = 卡名;
+//        this.時代 = 時代;
+//        this.類型 = 類型;
+//        this.加權值 = 加權值;
+//    }
 
     public Card() {
     }
@@ -210,13 +214,13 @@ public class Card implements CardType {
                 if (卡名.equalsIgnoreCase("")) {
                     return "[] ";
                 }
-                return "[" + get只有時代的時代名() + get牌背名() + "-" + get卡名() + "-" + get類型Name() + "-建造成本:" + get建造成本() + "] ";
+                return "[" + get只有時代的時代名() + get牌背名() + "-" + get卡名() + "-" + get類型Name() + "-建造成本:" + wonderStage + "] ";
             //"-"+this.奇蹟待建區.get().建造成本
             case 4://奇蹟  [I內政-泰姬陵-奇蹟-建造成本:*,4,2] *表示該段建造完成
                 if (卡名.equalsIgnoreCase("")) {
                     return "[] ";
                 }
-                return "[" + get只有時代的時代名() + get牌背名() + "-" + get卡名() + "-" + get類型Name() + "-建造成本:" + get建造成本() + "] ";
+                return "[" + get只有時代的時代名() + get牌背名() + "-" + get卡名() + "-" + get類型Name() + "-建造成本:" + wonderStage + "] ";
             default:
                 return toString();
         }
