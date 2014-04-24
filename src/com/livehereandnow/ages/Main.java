@@ -13,7 +13,7 @@ public class Main {
         InputStreamReader cin = new InputStreamReader(System.in);
         BufferedReader in = new BufferedReader(cin);
         while (true) {
-            System.out.print("" + ge.get當前玩家().getName() + " >> ");
+            System.out.print("" + ge.getCore().get當前玩家().getName() + " >> ");
             ge.doCmd(in.readLine());
         }
     }
