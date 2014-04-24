@@ -427,7 +427,7 @@ public class Player {
 //        想要拿的科技牌:card
 //        手上的牌
 //        桌上的牌
-        System.out.println("想要拿取 " + card.toString(1));
+//        System.out.println("想要拿取 " + card.toString(1));
 
         for (int k = 0; k < this.get手上的牌().size(); k++) {
             System.out.println("這是目前手上的牌 " + k + " " + this.get手上的牌().get(k).toString(1));
@@ -453,7 +453,7 @@ public class Player {
 //        想要拿的科技牌:card
 //        手上的牌
 //        桌上的牌
-        System.out.println("想要拿取 " + card.toString(1));
+//        System.out.println("想要拿取 " + card.toString(1));
 
         for (int k = 0; k < this.get手上的牌().size(); k++) {
             System.out.println("這是目前手上的牌 " + k + " " + this.get手上的牌().get(k).toString(1));
@@ -476,7 +476,7 @@ public class Player {
 //        想要拿的科技牌:card
 //        手上的牌
 //        桌上的牌
-        System.out.println("想要拿取 " + card.toString(1));
+//        System.out.println("想要拿取 " + card.toString(1));
 
         if (this.奇蹟待建區.size() != 0) {
             System.out.println("尚有待建的奇蹟 ");

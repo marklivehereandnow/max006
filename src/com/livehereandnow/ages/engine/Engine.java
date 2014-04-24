@@ -75,8 +75,12 @@ public class Engine {
         }
     }
 
-    public boolean doVersion() {
+    public boolean doVersion() {//想要拿取
 
+        System.out.println();
+        System.out.println("  === ver 0.31.1 ===  2014-4-24, 19:25, by Mark　");
+        System.out.println("    1. hide 想要拿取...");
+        System.out.println("    2. fix simple enter --- just do nothing and prompt again");
         System.out.println();
         System.out.println("  === ver 0.31 ===  2014-4-24, 19:08, by Mark　");
         System.out.println("    1. *** rearrange doCmd ***");

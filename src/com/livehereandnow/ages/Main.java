@@ -12,7 +12,6 @@ import java.util.List;
 public class Main {
 
     Engine engine;
-  
 
     public Main() throws AgesException {
         engine = new Engine();
@@ -40,10 +39,16 @@ public class Main {
      * @throws IOException
      */
     public boolean doCmd(String cmd) throws IOException, AgesException {
+        //
+        // 1. init
+        //
         int tokenCnt = 0;//命令行裡共有幾個字，給予初值為0
         String keyword = "";//指令是什麼，給予初值空字符串
         int parameter = -1;//指令的參數是什麼，給予初值為-1，-1通常是指不能用的值
 
+        //
+        // 2. parser to words 
+        //
         //將命令行的句子拆解為字，以空格格開為依據，空格都不記
         String[] strTokens = cmd.split(" ");
         List<String> tokens = new ArrayList<>();
@@ -52,35 +57,33 @@ public class Main {
                 tokens.add(item);
             }
         }
+        tokenCnt = tokens.size();//賦予變量tokenCnt真正的值，真正的值是指到底打個幾個字
 
-        //超過兩個字的時候
-        if (tokens.size() > 2) {
-            System.out.println("Command must be one or two words only!");
-            return false;
+        //
+        // 3. to execute command based on size
+        //
+        if (tokenCnt == 0) {//when simple enter
+            return true; // silently ignore it
         }
+        // 
+        keyword = tokens.get(0);//指令的關鍵字是第0個字，例如take 3的take
 
-        //是兩個字的時候
-        if (tokens.size() == 2) {
+        if (tokenCnt == 1) {//如果輸入的是一個字的話
+            return engine.doCmd(keyword);
+        }
+        if (tokenCnt == 2) {//如果輸入的是2個字的話
             try {
                 parameter = Integer.parseInt(tokens.get(1));
             } catch (Exception ex) {
                 System.out.println("Parameter must be integer!");
                 return false;
             }
-        }
-
-        keyword = tokens.get(0);//指令的關鍵字是第0個字，例如take 3的take
-        tokenCnt = tokens.size();//賦予變量tokenCnt真正的值，真正的值是指到底打個幾個字
-
-        // === for one word command ===單指令的命令行
-        if (tokenCnt == 1) {//如果輸入的是一個字的話
-            return engine.doCmd(keyword);
-        }
-        if (tokenCnt == 2) {//如果輸入的是2個字的話
             return engine.doCmd(keyword, parameter);
         }
-        return false; // not supposed to happen right now
-        
+
+        //
+        System.out.println("Cureently command must be one or two words only!");
+        return false;
 
     }
 
